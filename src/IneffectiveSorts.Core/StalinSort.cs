@@ -15,23 +15,20 @@ namespace IneffectiveSorts.Core
         public IEnumerable<int> Sort(IEnumerable<int> source)
         {
             if (source?.Any() != true) return new int[0];
-            int[] buffer = source.ToArray();
-            List<int> output = new List<int>(buffer.Length)
-            {
-                buffer[0]
-            };
 
-            var prev = 0;
-            for (int i = 1; i < buffer.Length; i++)
+            List<int> buffer = new List<int>(source.Count());
+            int? prevItem = null;
+
+            foreach (var item in source)
             {
-                if (buffer[i] > buffer[prev])
+                if(prevItem == null || item > prevItem)
                 {
-                    output.Add(buffer[i]);
-                    prev = i;
+                    buffer.Add(item);
+                    prevItem = item;
                 }
             }
 
-            return output;
+            return buffer;
         }
     }
 }
